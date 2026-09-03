@@ -8,6 +8,12 @@ class NeuronType(Enum):
     OUTPUT = auto()
 
 
+class LayerType(Enum):
+    INPUT = auto()
+    HIDDEN = auto()
+    OUTPUT = auto()
+
+
 class Neuron:
     def __init__(self, neuron_id: int, neuron_type: NeuronType, bias: float | None = None, activation: Activation | None = None):
         self.id = neuron_id
@@ -33,12 +39,10 @@ class Neuron:
 
 
 class Connection:
-    def __init__(self, connection_id: int, source_id : int, destination_id : int, weight : float | None = 0.0):
-        self.id = connection_id
-
-        # Neuron identities
-        self.source_id = source_id
-        self.destination_id = destination_id
+    def __init__(self, source : int, destination : int, weight : float | None = 0.0):
+        # Neurons
+        self.source = source
+        self.destination = destination
 
         # Trainable parameter
         self.weight = weight
