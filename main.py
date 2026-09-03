@@ -52,7 +52,8 @@ class Connection:
 
 
 class Layer:
-    def __init__(self):
+    def __init__(self, layer_type: LayerType):
+        self.type = layer_type
         self.nuerons = []
 
 
