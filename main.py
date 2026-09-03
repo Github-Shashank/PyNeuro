@@ -33,10 +33,18 @@ class Neuron:
 
 
 class Connection:
-    def __init__(self, source, destination, weight=0.0):
-        self.source = source
-        self.destination = destination
+    def __init__(self, connection_id: int, source_id : int, destination_id : int, weight : float | None = 0.0):
+        self.id = connection_id
+
+        # Neuron identities
+        self.source_id = source_id
+        self.destination_id = destination_id
+
+        # Trainable parameter
         self.weight = weight
+
+        # Backpropagation state
+        self.weight_gradient = 0.0
 
 
 class Layer:
