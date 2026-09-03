@@ -194,13 +194,6 @@ for connection in network.connections.values():
         "weight =", connection.weight
     )
 
-for connection in network.connections.values():
-    print(
-        "source =", id(connection.source),
-        "destination =", id(connection.destination),
-        "weight =", connection.weight
-    )
-
 print(
     "\nHidden 1 incoming:",
     len(hidden_1.incoming_connections)
@@ -232,3 +225,16 @@ print(
     connection in hidden_1.incoming_connections
 )
 
+print("\nNetwork Graph:")
+
+for layer in network.layers:
+    print(f"\n{layer.type}")
+
+    for neuron in layer.neurons:
+        print(f"  Neuron {id(neuron)}")
+
+        for connection in neuron.outgoing_connections:
+            print(
+                f"    -> {id(connection.destination)} "
+                f"(weight={connection.weight})"
+            )
