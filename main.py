@@ -54,31 +54,24 @@ class Connection:
 class Layer:
     def __init__(self, layer_type: LayerType):
         self.type = layer_type
-        self.nuerons = []
+        self.neurons = []
 
 
-class NueralNetwork:
+class NeuralNetwork:
     def __init__(self):
         self.layers = []
+        self.neurons = {}
+        self.connections = {}
 
+    def add_layer(self, layer: Layer):
+        self.layers.append(layer)
 
-input_neuron = Neuron(
-    0,
-    NeuronType.INPUT
-)
+        for neuron in layer.neurons:
+            self.neurons[id(neuron)] = neuron
 
-hidden_neuron = Neuron(
-    1,
-    NeuronType.HIDDEN,
-    bias=0.1,
-    activation=Activation.SIGMOID
-)
+    def connect(self, source: Neuron, destination: Neuron, weight: float = 0.0):
+        connection = Connection(source, destination, weight)
+        self.connections[id(connection)] = connection
 
-output_neuron = Neuron(
-    2,
-    NeuronType.OUTPUT,
-    bias=0.2,
-    activation=Activation.SIGMOID
-)
-
-print(output_neuron.__dict__)
+        source.outgoing_connections.append(connection)
+        destination.incomming_connections.append(connection)
