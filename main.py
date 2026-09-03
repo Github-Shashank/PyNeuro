@@ -1,7 +1,36 @@
-class Nueron:
-    def __init__(self, bias=0.0):
+from Activation import Activation
+from enum import Enum, auto 
+
+
+class NeuronType(Enum):
+    INPUT = auto()
+    HIDDEN = auto()
+    OUTPUT = auto()
+
+
+class Neuron:
+    def __init__(self, neuron_id: int, neuron_type: NeuronType, bias: float | None = None, activation: Activation | None = None):
+        self.id = neuron_id
+        self.type = neuron_type
+
+        # Trainable parameter
         self.bias = bias
-        self.value = 0
+
+        # Forward-pass state
+        self.z = 0.0
+        self.value = 0.0
+
+        # Backpropagation state
+        self.gradient = 0.0
+        self.bias_gradient = None if neuron_type == NeuronType.INPUT else 0.0
+
+        # Activation function
+        self.activation = activation 
+
+        # Graph realationships
+        self.incomming_connections = []
+        self.outgoing_connections = []
+
 
 class Connection:
     def __init__(self, source, destination, weight=0.0):
@@ -9,10 +38,34 @@ class Connection:
         self.destination = destination
         self.weight = weight
 
+
 class Layer:
     def __init__(self):
         self.nuerons = []
 
+
 class NueralNetwork:
     def __init__(self):
         self.layers = []
+
+
+input_neuron = Neuron(
+    0,
+    NeuronType.INPUT
+)
+
+hidden_neuron = Neuron(
+    1,
+    NeuronType.HIDDEN,
+    bias=0.1,
+    activation=Activation.SIGMOID
+)
+
+output_neuron = Neuron(
+    2,
+    NeuronType.OUTPUT,
+    bias=0.2,
+    activation=Activation.SIGMOID
+)
+
+print(output_neuron.__dict__)
