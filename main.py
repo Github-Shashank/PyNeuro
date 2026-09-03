@@ -18,6 +18,7 @@ class Neuron:
     def __init__(self, neuron_id: int, neuron_type: NeuronType, bias: float | None = None, activation: Activation | None = None):
         self.id = neuron_id
         self.type = neuron_type
+        self.layer = None
 
         # Trainable parameter
         self.bias = bias
@@ -55,6 +56,10 @@ class Layer:
     def __init__(self, layer_type: LayerType):
         self.type = layer_type
         self.neurons = []
+
+    def add_neuron(self, neuron: Neuron):
+        neuron.layer = self 
+        self.neurons.append(neuron)
 
 
 class NeuralNetwork:
